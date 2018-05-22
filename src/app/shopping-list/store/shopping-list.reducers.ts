@@ -4,7 +4,8 @@ import {
   ADD_INGREDIENT,
   ADD_INGREDIENTS,
   DELETE_INGREDIENT,
-  UPDATE_INGREDIENT
+  UPDATE_INGREDIENT,
+  START_EDIT, STOP_EDIT
 } from './shopping-list.actions';
 
 export interface IShoppingListState {
@@ -24,37 +25,60 @@ const initialState: IShoppingListState = {
 
 export function shoppingListReducer(state = initialState, action: ShoppingListActions) {
   switch (action.type) {
+
     case ADD_INGREDIENT:
       return {
         ...state,
         ingredients: [...state.ingredients, action.payload]
       };
+
     case ADD_INGREDIENTS:
       return {
         ...state,
         ingredients: [...state.ingredients, ...action.payload]
       };
+
+    case START_EDIT:
+      const editedIngredient = {...state.ingredients[action.payload]};
+      return {
+        ...state,
+        editedIngredient: editedIngredient,
+        editedIngredientIndex: action.payload
+      };
+
+    case STOP_EDIT:
+      return {
+        ...state,
+        editedIngredient: null,
+        editedIngredientIndex: -1
+      };
+
     case UPDATE_INGREDIENT:
-      // Get the updated ingredient
-      const ingredient = state.ingredients[action.payload.index];
+      // Get the updated ingredient, we can also use store.editedIngredient instead of this part
+      const ingredient = state.ingredients[state.editedIngredientIndex];
       const updatedIngredient = {
         ...ingredient,
         ...action.payload.ingredient
       };
       // Now that we have the updated ingredient, overwrite it in our ingredients
       const ingredients = [...state.ingredients];
-      ingredients[action.payload.index] = updatedIngredient;
+      ingredients[state.editedIngredientIndex] = updatedIngredient;
       return {
         ...state,
         // ingredients: [...state.ingredients, updatedIngredient]
-        ingredients: ingredients
+        ingredients: ingredients,
+        editedIngredient: null,
+        editedIngredientIndex: -1
       };
+
     case DELETE_INGREDIENT:
-      const ingredientsBeforeDelete = [...state.ingredients];
-      const updatedIngredients = ingredientsBeforeDelete.splice(action.payload, 1);
+      const oldIngredients = [...state.ingredients];
+      oldIngredients.splice(state.editedIngredientIndex, 1);
       return {
         ...state,
-        ingredients: updatedIngredients
+        ingredients: oldIngredients,
+        editedIngredient: null,
+        editedIngredientIndex: -1
       };
     default: {
       return state;
