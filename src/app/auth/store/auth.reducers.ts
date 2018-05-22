@@ -1,4 +1,4 @@
-import {AuthActions, LOGIN, LOGOUT, SET_TOKEN, SIGNUP} from './auth.actions';
+import { AuthActions, LOGIN, LOGOUT, SET_TOKEN, SIGNUP } from './auth.actions';
 
 export interface IAuthState {
   token: string;
@@ -9,8 +9,6 @@ const initialState: IAuthState = {
   token: null,
   authenticated: false
 };
-
-
 
 export function authReducer(state = initialState, action: AuthActions) {
   switch (action.type) {
@@ -28,7 +26,8 @@ export function authReducer(state = initialState, action: AuthActions) {
       };
     case SET_TOKEN:
       return {
-        ...state
+        ...state,
+        token: action.payload
       };
     default: {
       return state;

@@ -2,17 +2,32 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/c
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 
-import { AuthService } from '../auth/auth.service';
+import {IAppState} from '../app.reducers';
+import {Store} from '@ngrx/store';
+import { switchMap } from 'rxjs/operators';
+
+import {IAuthState} from '../auth/store/auth.reducers';
+import {take} from 'rxjs/internal/operators';
+
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private authService: AuthService) {}
+  constructor(private store: Store<IAppState>) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     console.log('Intercepted!', req);
-    // const copiedReq = req.clone({headers: req.headers.set('', '')});
-    const copiedReq = req.clone({params: req.params.set('auth', this.authService.getToken())});
-    return next.handle(copiedReq);
+
+    // store.select sets an ongoing subscription, that's why we use take(1)
+    return this.store.select('auth')
+      .pipe(
+        take(1),
+        switchMap(
+          (authState: IAuthState) => {
+            const copiedReq = req.clone({params: req.params.set('auth', authState.token)});
+            return next.handle(copiedReq);
+          }
+        )
+      );
     // return null;
   }
 }

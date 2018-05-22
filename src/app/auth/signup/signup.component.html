@@ -3,16 +3,21 @@
     <form (ngSubmit)="onSignup(f)" #f="ngForm">
       <div class="form-group">
         <label for="email">Mail</label>
-        <input type="email" id="email" name="email" ngModel class="form-control">
+        <input type="email"
+               id="email"
+               name="email"
+               ngModel
+               class="form-control"
+               autocomplete="email">
       </div>
       <div class="form-group">
         <label for="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          ngModel
-          class="form-control">
+        <input type="password"
+               id="password"
+               name="password"
+               ngModel
+               class="form-control"
+               autocomplete="password">
       </div>
       <button class="btn btn-primary" type="submit" [disabled]="!f.valid">Sign Up</button>
     </form>

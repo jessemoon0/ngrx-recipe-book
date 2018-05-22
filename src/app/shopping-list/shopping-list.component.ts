@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { Ingredient } from '../shared/ingredient.model';
-
 // NgRx
 import { Store } from '@ngrx/store';
 import { IAppState } from '../app.reducers';
