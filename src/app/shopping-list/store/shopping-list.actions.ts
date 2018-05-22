@@ -18,7 +18,7 @@ export class AddIngredients implements Action {
   constructor(public payload: Ingredient[]) {}
 }
 
-// The state management for edit mode
+// The state management for edit mode. Payload is index of the element to edit
 export class StartEdit implements Action {
   readonly type = START_EDIT;
   constructor(public payload: number) {}
@@ -28,13 +28,12 @@ export class StopEdit implements Action {
   readonly type = STOP_EDIT;
 }
 
-// We are passing the index and the ingredient we want to update
+// We are passing the ingredient we want to update
 export class UpdateIngredient implements Action {
   readonly type = UPDATE_INGREDIENT;
   constructor(public payload: {ingredient: Ingredient}) {}
 }
 
-// We are passing the index of ingredient to delete
 export class DeleteIngredient implements Action {
   readonly type = DELETE_INGREDIENT;
 }

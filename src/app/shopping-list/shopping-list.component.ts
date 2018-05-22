@@ -7,6 +7,7 @@ import { Ingredient } from '../shared/ingredient.model';
 import { Store } from '@ngrx/store';
 import { IAppState } from '../app.reducers';
 import {StartEdit} from './store/shopping-list.actions';
+import {IShoppingListState} from './store/shopping-list.reducers';
 
 @Component({
   selector: 'app-shopping-list',
@@ -14,7 +15,7 @@ import {StartEdit} from './store/shopping-list.actions';
   styleUrls: ['./shopping-list.component.css']
 })
 export class ShoppingListComponent implements OnInit {
-  shoppingListState: Observable<{ingredients: Ingredient[]}>;
+  shoppingListState: Observable<IShoppingListState>;
 
   constructor(private store: Store<IAppState>) { }
 
