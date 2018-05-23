@@ -1,4 +1,4 @@
-import { AuthActions, LOGIN, LOGOUT, SET_TOKEN, SIGNUP } from './auth.actions';
+import {AuthActions, LOGIN, LOGOUT, SET_TOKEN, SIGNUP} from './auth.actions';
 
 export interface IAuthState {
   token: string;

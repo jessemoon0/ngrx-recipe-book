@@ -12,6 +12,8 @@ import { CoreModule } from './core/core.module';
 // NgRx
 import { StoreModule } from '@ngrx/store';
 import { reducers } from './app.reducers';
+import { EffectsModule } from '@ngrx/effects';
+import { AuthEffects } from './auth/store/auth.effects';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,8 @@ import { reducers } from './app.reducers';
     ShoppingListModule,
     AuthModule,
     CoreModule,
-    StoreModule.forRoot(reducers)
+    StoreModule.forRoot(reducers),
+    EffectsModule.forRoot([AuthEffects])
   ],
   bootstrap: [AppComponent]
 })

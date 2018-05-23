@@ -1,24 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
-import { AuthService } from '../auth.service';
+// NgRx
+import { IAppState } from '../../app.reducers';
+import { Store } from '@ngrx/store';
+import { BeforeSignUp } from '../store/auth.actions';
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
-export class SignupComponent implements OnInit {
+export class SignupComponent {
 
-  constructor(private authService: AuthService) { }
-
-  ngOnInit() {
-  }
+  constructor(private store: Store<IAppState>) { }
 
   onSignup(form: NgForm) {
     const email = form.value.email;
     const password = form.value.password;
-    this.authService.signupUser(email, password);
+    this.store.dispatch(new BeforeSignUp({username: email, password}));
   }
 
 }
