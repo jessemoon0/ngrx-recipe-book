@@ -65,7 +65,6 @@ export function shoppingListReducer(state = initialState, action: ShoppingListAc
       ingredients[state.editedIngredientIndex] = updatedIngredient;
       return {
         ...state,
-        // ingredients: [...state.ingredients, updatedIngredient]
         ingredients: ingredients,
         editedIngredient: null,
         editedIngredientIndex: -1
