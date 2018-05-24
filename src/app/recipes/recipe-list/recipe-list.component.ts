@@ -3,11 +3,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { Observable } from 'rxjs';
 
-import { Recipe } from '../recipe.model';
-
 // NgRx
 import { Store } from '@ngrx/store';
-import {IRecipeState, IRecipeStateLazy} from '../store/recipe.reducers';
+import { IRecipeState, IRecipeStateLazy } from '../store/recipe.reducers';
 
 @Component({
   selector: 'app-recipe-list',
