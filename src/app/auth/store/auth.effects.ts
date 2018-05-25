@@ -17,10 +17,8 @@ import {Router} from '@angular/router';
 
 import * as firebase from 'firebase';
 
-import {Observable, of} from 'rxjs';
-import { map, switchMap, mergeMap } from 'rxjs/operators';
-import { fromPromise } from 'rxjs/internal/observable/fromPromise';
-import {catchError} from 'rxjs/internal/operators';
+import {from, Observable, of} from 'rxjs';
+import { map, switchMap, mergeMap, catchError } from 'rxjs/operators';
 
 @Injectable()
 export class AuthEffects {
@@ -33,14 +31,14 @@ export class AuthEffects {
     }),
     // Trigger the firebase call. @Effects expects an observable to be returned, that's why we use fromPromise
     switchMap((authData: {username: string, password: string}) => {
-      return fromPromise(
+      return from(
         firebase.auth().createUserWithEmailAndPassword(
           authData.username, authData.password
         )
       ).pipe(
         // Once the call is successful, send the network call to get the token
         switchMap(() => {
-          return fromPromise(firebase.auth().currentUser.getIdToken());
+          return from(firebase.auth().currentUser.getIdToken());
         }),
         // We use mergeMap to execute 2 actions in 1
         mergeMap((token: string) => {
@@ -72,14 +70,14 @@ export class AuthEffects {
       // Trigger the firebase call. @Effects expects an observable to be returned,
       // that's why we use fromPromise
       switchMap((authData: {username: string, password: string}) => {
-        return fromPromise(
+        return from(
           firebase.auth().signInWithEmailAndPassword(
             authData.username, authData.password
           )
         ).pipe(
           // Once the call is successful, send the network call to get the token
           switchMap(() => {
-            return fromPromise(firebase.auth().currentUser.getIdToken());
+            return from(firebase.auth().currentUser.getIdToken());
           }),
           // We use mergeMap to execute 2 actions in 1
           mergeMap((token: string) => {
@@ -108,7 +106,7 @@ export class AuthEffects {
   logout: Observable<Action> = this.actions$.ofType(FIREBASE_LOGOUT)
     .pipe(
       switchMap(() => {
-        return fromPromise(firebase.auth().signOut())
+        return from(firebase.auth().signOut())
           .pipe(
             map(() => {
               this.router.navigate(['/signin']);

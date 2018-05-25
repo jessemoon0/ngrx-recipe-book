@@ -4,10 +4,9 @@ import { Injectable } from '@angular/core';
 
 import {IAppState} from '../app.reducers';
 import {Store} from '@ngrx/store';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, take } from 'rxjs/operators';
 
 import {IAuthState} from '../auth/store/auth.reducers';
-import {take} from 'rxjs/internal/operators';
 
 
 @Injectable()

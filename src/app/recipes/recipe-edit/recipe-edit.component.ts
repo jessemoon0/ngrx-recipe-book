@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 
-import { RecipeService } from '../recipe.service';
-import {IRecipeState, IRecipeStateLazy} from '../store/recipe.reducers';
-import {Store} from '@ngrx/store';
-import {AddRecipe, UpdateRecipe} from '../store/recipe.actions';
-import {take} from 'rxjs/operators';
+import { take } from 'rxjs/operators';
+
+// NgRx
+import { IRecipeState, IRecipeStateLazy } from '../store/recipe.reducers';
+import { Store } from '@ngrx/store';
+import { AddRecipe, UpdateRecipe } from '../store/recipe.actions';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -19,7 +20,6 @@ export class RecipeEditComponent implements OnInit {
   recipeForm: FormGroup;
 
   constructor(private route: ActivatedRoute,
-              private recipeService: RecipeService,
               private router: Router,
               private store: Store<IRecipeStateLazy>
   ) { }

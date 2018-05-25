@@ -1,6 +1,6 @@
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Injectable } from '@angular/core';
-import {map, take} from 'rxjs/internal/operators';
+import {map, take} from 'rxjs/operators';
 
 import {IAppState} from '../app.reducers';
 import {Store} from '@ngrx/store';
